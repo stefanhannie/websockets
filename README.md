@@ -9,10 +9,3 @@ open, one for te client and one for the server.
 
 Run ./echo-server.py and sudo python ./echo-client.py to get messages passed between them.
 Prints 'Hello World' on the client server.
-
-
-
-
-
-
-
