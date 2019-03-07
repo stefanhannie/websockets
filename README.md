@@ -20,3 +20,4 @@ To set one up issue the following commands.
   `(venv) username@your-computer-name-here:~/path/to/your/project$`
   Now you can run the following to install all dependencies:
   `pip install -r requirements.txt`.
+  **Using pipenv instead**
