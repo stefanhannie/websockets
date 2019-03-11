@@ -1,10 +1,7 @@
 import requests
 import json as j
-import hashlib as h
 
 server = 'http://18.218.219.1'
-# username = 'superadmin:somepassword'
-# user_md5 = h.md5(username.encode())
 
 
 def get_response():
@@ -52,34 +49,53 @@ def get_web_sockets():
     return wesockets
 
 
-# def format_json(file):
-#     text = file.text()
-#     text = j.loads(text)
-#
-#     return text
+def create_account():
+    auth = get_auth_token()
+    headers = {
+        'X-Auth-Token': auth,
+        'Content-Type': 'application/json',
+    }
+
+    data = '{"data":{"name":"send_message"}}'
+
+    new = requests.put(server + ':8000/v2/accounts', headers=headers, data=data)
+
+    return new
 
 
-# def get_accounts():
+def get_socket1_id():
+    auth = get_auth_token()
+    acc_id = '43b5a09e9000fbfc9fd16b78c98b1057'
+    headers = {'X-Auth-Token': auth,
+               }
+    ids = requests.get(server + ':8000/v2/accounts/' + acc_id + '/websockets', headers=headers)
+
+    return ids
+
+
+# def create_user():
 #     auth = get_auth_token()
-#     acc_id = get_acc_id()
-#     headers = {'X-Auth-Token': auth
+#     acc_id = '43b5a09e9000fbfc9fd16b78c98b1057'
+#     headers = {
+#         'X-Auth-Token': auth,
+#         'Content-Type': 'application/json',
+#     }
 #
-#                }
-
-#     ids = requests.get(server + ':8000/v2/accounts/' + acc_id + '/websockets', headers=headers)
+#     data = '{"data":{"first_name":"Win", "last_name":"Win"}}'
 #
-#     return ids
+#     new = requests.put(server + ':8000/v2/accounts/' + acc_id + '/users', headers=headers, data=data)
+#
+#     return new
 
 
 if __name__ == '__main__':
 
-    get = get_web_sockets().text
+    get = get_acc_id().text
 
     parsed = j.loads(get)
 
     # #print(parsed)
     print(j.dumps(parsed, indent=2, sort_keys=True))
-
 
 
 
