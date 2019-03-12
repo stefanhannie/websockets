@@ -21,3 +21,13 @@ To set one up issue the following commands.
   Now you can run the following to install all dependencies:
   `pip install -r requirements.txt`.
   **Using pipenv instead**
+
+## Blackhole && Kazoo subscription
+**kazoo_put.py**
+Use RESTful API Getting the auth_token from crossbar by providing a MD5 hash of the username/password
+Using the auth_token to create accounts, get subscribe to crossbar - access endpoints
+
+**kazoo_websocket.py**
+The code can now talk to crossbar successfully.
+Blackhole, the backend implementation of websockets in kazoo is listening on port 5555
+Can now subscribe to events from crossbar and can print the notifications
