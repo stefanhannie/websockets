@@ -21,7 +21,7 @@ message = {
                 }
             }
 
-jsonfied = j.dumps(message)
+jsonify = j.dumps(message)
 
 
 # consumer code that prints the notifications
@@ -33,7 +33,7 @@ async def hello():
     print('trying to connect')
     async with w.connect(f"ws://{HOST}:5555") as ws:
         print('connected')
-        await ws.send(jsonfied
+        await ws.send(jsonify
                       )
         try:
 
