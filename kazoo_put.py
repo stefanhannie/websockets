@@ -44,9 +44,9 @@ def get_socket_id():
 
 def get_web_sockets():
 
-    wesockets = requests.get(server + ':8000/v2/websockets')
+    websockets = requests.get(server + ':8000/v2/websockets')
 
-    return wesockets
+    return websockets
 
 
 def create_account():
@@ -65,7 +65,7 @@ def create_account():
 
 def get_socket1_id():
     auth = get_auth_token()
-    acc_id = '43b5a09e9000fbfc9fd16b78c98b1057'
+    acc_id = get_acc_id()
     headers = {'X-Auth-Token': auth,
                }
     ids = requests.get(server + ':8000/v2/accounts/' + acc_id + '/websockets', headers=headers)
@@ -73,24 +73,27 @@ def get_socket1_id():
     return ids
 
 
-# def create_user():
-#     auth = get_auth_token()
-#     acc_id = '43b5a09e9000fbfc9fd16b78c98b1057'
-#     headers = {
-#         'X-Auth-Token': auth,
-#         'Content-Type': 'application/json',
-#     }
-#
-#     data = '{"data":{"first_name":"Win", "last_name":"Win"}}'
-#
-#     new = requests.put(server + ':8000/v2/accounts/' + acc_id + '/users', headers=headers, data=data)
-#
-#     return new
+def create_user():
+    auth = get_auth_token()
+    acc_id = get_acc_id()
+    headers = {
+        'X-Auth-Token': auth,
+        'Content-Type': 'application/json',
+    }
+
+    data = '{"data":{"first_name":"Sarah", "last_name":"Brown"}}'
+
+    # data = '{"data":{"first_name":' + f_name + ',"last_name":' + l_name + '}}'
+    # data = j.dumps(data)
+
+    new = requests.put(server + ':8000/v2/accounts/' + acc_id + '/users', headers=headers, data=data)
+
+    return new
 
 
 if __name__ == '__main__':
 
-    get = get_acc_id().text
+    get = create_user().text
 
     parsed = j.loads(get)
 
