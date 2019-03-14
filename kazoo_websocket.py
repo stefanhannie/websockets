@@ -3,14 +3,16 @@ import asyncio
 import json as j
 
 from websockets import ConnectionClosed
-
 import kazoo_put as kp
 
 
+# Global Variables
 HOST = '18.218.219.1'
 auth_token = kp.get_auth_token()
 acc_id = kp.get_acc_id()
 
+
+# subscription message to crossbar with singke binding
 message = {
     'action': 'subscribe',
     'auth_token': auth_token,
@@ -21,6 +23,7 @@ message = {
     }
 }
 
+# turn the message being sent into a json object
 jsonfied = j.dumps(message)
 
 
@@ -37,6 +40,7 @@ async def consumer(event):
     print(item)
 
 
+# Start connection to blackhole over 5555
 async def hello():
     print('trying to connect')
     async with w.connect(f"ws://{HOST}:5555") as ws:
