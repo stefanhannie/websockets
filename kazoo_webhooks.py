@@ -9,11 +9,20 @@ app = Flask(__name__)
 def api_root():
     return 'Welcome guys'
 
+# @app.route('/github', methods=['POST'])
+# def api_gh_message():
+#     if request.headers['Content-Type'] == 'application/json':
+#         get_info = json.dumps(request.json)
+#         print(get_info)
+#         return get_info
 
-@app.route('/github', methods=['POST'])
-def api_gh_message():
+
+@app.route('/kazoo', methods=['POST'])
+def api_kz_hook():
     if request.headers['Content-Type'] == 'application/json':
-        return json.dumps(request.json)
+        info = json.dumps(request.json)
+        print(info)
+        return info
 
 
 if __name__ == '__main__':

@@ -12,6 +12,12 @@ auth_token = kp.get_auth_token()
 acc_id = kp.get_acc_id()
 
 
+# jesonify a message
+def jsonify(d):
+    jsonfied = j.dumps(d)
+    return jsonfied
+
+
 # subscription message to crossbar with singke binding
 message = {
     'action': 'subscribe',
@@ -24,7 +30,7 @@ message = {
 }
 
 # turn the message being sent into a json object
-jsonfied = j.dumps(message)
+# jsonfied = j.dumps(message)
 
 
 # consumer code that prints the notifications
@@ -45,7 +51,7 @@ async def hello():
     print('trying to connect')
     async with w.connect(f"ws://{HOST}:5555") as ws:
         print('connected')
-        await ws.send(jsonfied)
+        await ws.send(jsonify(message))
         try:
             response = await ws.recv()
             print(response)

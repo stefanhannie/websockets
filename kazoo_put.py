@@ -5,27 +5,29 @@ server = 'http://18.218.219.1'
 
 
 # get more information on data from websocket by requesting for more details
-def get_items(item_type, account_id, item_id):
+def get_items(item_type, account_id, item_id, auth):
     response = requests.get(
-        f'{server}:8000/v2/accounts/{account_id}/{item_type}s/{item_id}', headers=get_headers())
+        f'{server}:8000/v2/accounts/{account_id}/{item_type}s/{item_id}', headers=get_headers(auth))
     return response.json()
 
 
 # custom headers for requests
-def get_headers():
+def get_headers(auth):
     return {
-        'X-Auth-Token': get_auth_token(),
+        'X-Auth-Token': auth,
         'Content-Type': 'application/json',
     }
 
 
 # Get the auth_token from crossbar
 def get_response():
-
+    headers = {
+        'Content-Type': 'application/json',
+    }
     data = '{"data":{"credentials":"92b5841ef89f79c5b359226f24d194a4","account_name":"master"}}'
 
     _response = requests.put(
-        server + ':8000/v2/user_auth', headers=get_headers(), data=data)
+        server + ':8000/v2/user_auth', headers=headers, data=data)
 
     return _response
 
@@ -34,9 +36,9 @@ def get_response():
 def get_auth_token():
     key = get_response()
     key = key.json()
-    auth_token = key['auth_token']
+    auth_token_og = key['auth_token']
 
-    return auth_token
+    return auth_token_og
 
 
 # Parse json file for account id
@@ -49,8 +51,7 @@ def get_acc_id():
 
 
 # Request available socket ids
-def get_socket_id():
-    auth = get_auth_token()
+def get_socket_id(auth):
     acc_id = get_acc_id()
     headers = {'X-Auth-Token': auth,
                }
@@ -68,9 +69,8 @@ def get_web_sockets():
     return wesockets
 
 
-# create an acoount
-def create_account():
-    auth = get_auth_token()
+# create an account
+def create_account(auth):
     headers = {
         'X-Auth-Token': auth,
         'Content-Type': 'application/json',
@@ -79,14 +79,14 @@ def create_account():
     data = '{"data":{"name":"send_message"}}'
 
     new = requests.put(server + ':8000/v2/accounts',
-                       headers=headers, data=data)
+                       headers=get_headers(), data=data)
 
     return new
 
 
 # create user
-def create_user():
-    auth = get_auth_token()
+def create_user(auth):
+
     acc_id = '43b5a09e9000fbfc9fd16b78c98b1057'
     headers = {
         'X-Auth-Token': auth,
@@ -95,15 +95,15 @@ def create_user():
 
     data = '{"data":{"first_name":"Win", "last_name":"Win"}}'
 
-    new = requests.put(server + ':8000/v2/accounts/' + acc_id + '/users', headers=headers, data=data)
+    new = requests.put(server + ':8000/v2/accounts/' + acc_id + '/users', headers=get_headers(auth), data=data)
 
     return new
 
 
-
 if __name__ == '__main__':
+    auth_token = get_auth_token()
 
-    get = get_socket_id().text
+    get = get_web_sockets().text
 
     parsed = j.loads(get)
 
