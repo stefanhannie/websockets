@@ -62,11 +62,12 @@ def api_kz_hook():
 
     # if request.headers['Content-Type'] == 'application/json':
 
-    action = request.args.get('action')
-    type_t = request.args.get('type')
-    id_t = request.args.get('id')
-    account_id = request.args.get('account_id')
-    print(account_id, type_t, action, id_t)
+    action = request.get_data()
+    # type_t = request.args.get('type')
+    # id_t = request.args.get('id')
+    # account_id = request.args.get('account_id')
+    # print(account_id, type_t, action, id_t)
+
     return action
 
 
