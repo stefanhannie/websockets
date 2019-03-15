@@ -88,12 +88,8 @@ def create_account(auth):
 def create_user(auth):
 
     acc_id = '43b5a09e9000fbfc9fd16b78c98b1057'
-    headers = {
-        'X-Auth-Token': auth,
-        'Content-Type': 'application/json',
-    }
 
-    data = '{"data":{"first_name":"Win", "last_name":"Win"}}'
+    data = '{"data":{"first_name":"tin", "last_name":"tin"}}'
 
     new = requests.put(server + ':8000/v2/accounts/' + acc_id + '/users', headers=get_headers(auth), data=data)
 
@@ -103,7 +99,7 @@ def create_user(auth):
 if __name__ == '__main__':
     auth_token = get_auth_token()
 
-    get = get_web_sockets().text
+    get = create_user(auth_token).text
 
     parsed = j.loads(get)
 

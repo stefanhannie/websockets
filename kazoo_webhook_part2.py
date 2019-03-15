@@ -3,7 +3,7 @@ import kazoo_put as kp
 import requests
 import kazoo_websocket as ws
 
-my_server = 'http://266d982a.ngrok.io/kazoo'
+my_server = 'http://cc036d94.ngrok.io/kazoo'
 
 HOST = '18.218.219.1'
 auth_token = kp.get_auth_token()
@@ -12,11 +12,17 @@ server = kp.server
 headers = kp.get_headers(auth=auth_token)
 
 message = {"data": {
-        "name": "New User",
-        "uri": 'my.' + my_server + '/users/new_user.php',
+        "name": "Account Uno",
+        "uri": my_server,
         "http_verb": "post",
-        "hook": "channel_create",
-        "retries": 3
+        "hook": "object",
+        "action": "doc_deleted",
+        "type": "account",
+        "retries": 3,
+        "custom_data": {
+            "type": "user",
+            "action": "doc_deleted"
+        }
     }
 }
 
